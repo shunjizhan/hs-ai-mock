@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0C0E16;
+  --color-foreground: #E5E7EB;
+  --color-surface: #151821;
+  --color-surface-hover: #1C2030;
+  --color-border: #1F2635;
+  --color-muted: #6B7280;
+  --color-primary: #F97316;
+  --color-primary-hover: #EA580C;
+  --color-accent: #8B5CF6;
+  --color-accent-hover: #7C3AED;
+  --color-success: #22C55E;
+  --color-danger: #EF4444;
+  --font-sans: var(--font-inter);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
+
+@keyframes message-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typing-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+.animate-message-in {
+  animation: message-in 0.3s ease-out forwards;
+}
+
+.typing-dot {
+  animation: typing-dot 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
