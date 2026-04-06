@@ -99,23 +99,23 @@ const CRITERIA_DESC: Record<string, string> = {
 /* ------------------------------------------------------------------ */
 
 const TECH_OPTIONS: ChatOption[] = [
+  { label: "Grid Trading", value: "tech-grid" },
   { label: "RSI Strategies", value: "tech-rsi" },
   { label: "MACD Strategies", value: "tech-macd" },
-  { label: "Bollinger Band Strategies", value: "tech-bb" },
   { label: "Just pick for me", value: "tech-auto" },
   { label: "I\u2019ll select my own", value: "tech-browse" },
 ];
 
 const TECH_FILTER: Record<string, string> = {
+  "tech-grid": "Grid",
   "tech-rsi": "RSI",
   "tech-macd": "MACD",
-  "tech-bb": "Bollinger Bands",
 };
 
 const TECH_LABEL: Record<string, string> = {
+  "tech-grid": "Grid Trading",
   "tech-rsi": "RSI Strategies",
   "tech-macd": "MACD Strategies",
-  "tech-bb": "Bollinger Band Strategies",
 };
 
 const sortTechStrategies = (indicator: string): TechnicalStrategy[] => {

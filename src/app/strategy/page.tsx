@@ -422,22 +422,23 @@ const StrategyContent = () => {
   const traderId = searchParams.get("trader");
   const trader = mockTraders.find((t) => t.id === traderId);
 
-  // Map trader ID → strategy type & display name (matches sidebar)
-  const STRATEGY_META: Record<string, { type: string; name: string }> = {
-    "alpha-vault": { type: "copy", name: "AlphaVault" },
-    "deep-signal": { type: "copy", name: "DeepSignal" },
-    "rsi-breakout": { type: "technical", name: "RSI Breakout" },
-    "fed-watch": { type: "news", name: "Fed Watch" },
-    "custom-1": { type: "hybrid", name: "BTC $100K Alert" },
-    // Auto-add all technical strategies
+  // Map trader ID → strategy type, name, and description
+  const STRATEGY_META: Record<string, { type: string; name: string; desc: string }> = {
+    "alpha-vault": { type: "copy", name: "AlphaVault", desc: "" },
+    "deep-signal": { type: "copy", name: "DeepSignal", desc: "" },
+    "rsi-breakout": { type: "technical", name: "RSI Breakout", desc: "Enters long when RSI crosses above 30 from oversold territory with 10/50 MA golden cross confirmation. Shorts on RSI > 70 with death cross. Positions auto-close at opposite signal or trailing stop." },
+    "fed-watch": { type: "news", name: "Fed Watch", desc: "" },
+    "custom-1": { type: "hybrid", name: "BTC $100K Alert", desc: "" },
+    // Auto-add all technical strategies from mock data
     ...Object.fromEntries(
-      mockTechnicalStrategies.map((s) => [s.id, { type: "technical", name: s.name }])
+      mockTechnicalStrategies.map((s) => [s.id, { type: "technical", name: s.name, desc: s.description }])
     ),
   };
   const meta = traderId ? STRATEGY_META[traderId] : null;
   // Default to "copy" for any trader coming from the copy-trade page
   const activeLabel = traderId ? (meta?.type ?? "copy") : null;
   const strategyName = trader?.name ?? meta?.name ?? traderId;
+  const strategyDesc = meta?.desc || null;
   const equityData = trader ? extendEquity(trader.sparkline) : extendEquity([100, 104, 102, 108, 112, 110, 118, 122, 120, 128, 135, 132, 140]);
 
   return (
@@ -486,13 +487,13 @@ const StrategyContent = () => {
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
                   <h2 className="text-lg font-semibold text-foreground mb-1">
-                    {STRATEGY_LABELS.find((l) => l.key === activeLabel)?.label ?? "Strategy"} &mdash; {strategyName}
+                    {strategyName}
                   </h2>
                   <p className="text-sm text-muted leading-relaxed">
                     {activeLabel === "copy" &&
                       `Automatically mirrors all positions opened by ${strategyName} on Hyperliquid. Trades are executed in real time with proportional position sizing relative to your configured allocation. Stop-loss and max drawdown limits are enforced locally.`}
-                    {activeLabel === "technical" &&
-                      "Long BTC when a golden cross occurs on the 10-day / 50-day moving average. Short on death cross confirmation with RSI > 70. Bollinger Band squeeze breakouts trigger additional entries on ETH and SOL. All signals require volume confirmation above 1.5x 20-day average."}
+                    {activeLabel === "technical" && (strategyDesc ||
+                      "Automated technical strategy executing trades based on indicator signals with configurable risk parameters.")}
                     {activeLabel === "news" &&
                       "Monitors CPI, FOMC, and NFP releases via real-time news feeds. Opens long positions on dovish surprises and shorts on hawkish outcomes. Sentiment scoring from aggregated crypto Twitter and on-chain whale activity is used as a secondary filter before execution."}
                     {activeLabel === "hybrid" &&

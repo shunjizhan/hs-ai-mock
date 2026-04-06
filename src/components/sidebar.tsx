@@ -40,6 +40,13 @@ const MOCK_STRATEGIES = [
     color: "text-accent",
   },
   {
+    id: "grid-range",
+    name: "Range Grid",
+    icon: BarChart3,
+    tooltip: "Grid Trading",
+    color: "text-accent",
+  },
+  {
     id: "fed-watch",
     name: "Fed Watch",
     icon: Newspaper,

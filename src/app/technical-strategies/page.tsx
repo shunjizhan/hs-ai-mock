@@ -23,7 +23,7 @@ const FILTER_CHIPS = [
   "All",
   "RSI",
   "MACD",
-  "Bollinger Bands",
+  "Grid",
   "EMA",
   "VWAP",
   "Supertrend",
